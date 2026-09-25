@@ -47,3 +47,10 @@ def read_performances(db: Session = Depends(get_db)):
 @app.get("/performances/{performance_id}", response_model=schemas.PerformanceResponse)
 def read_performance(performance_id: int, db: Session = Depends(get_db)):
     return crud.get_performance(db, performance_id)
+
+@app.put("/performances/{performance_id}", response_model=schemas.PerformanceResponse)
+def update_performance(performance_id: int, performance: schemas.PerformanceUpdate, db: Session = Depends(get_db)):
+    updated = crud.update_performance(db, performance_id, performance)
+    if not updated:
+        return {"error": "not found"}
+    return updated

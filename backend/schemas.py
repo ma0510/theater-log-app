@@ -31,5 +31,12 @@ class PerformanceResponse(PerformanceCreate):
     id: int
     casts: List[CastResponse]
 
-    class Config:
-        from_attributes = True
+class PerformanceUpdate(BaseModel):
+    category: Category
+    title: str
+    watched_date: date
+    show_time: ShowTime
+    seat: str
+    seat_type: str
+    memo: Optional[str] = None
+    casts: List[CastCreate]
