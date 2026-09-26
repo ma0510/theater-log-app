@@ -25,7 +25,7 @@ export default function Home() {
   const [performances, setPerformances] = useState<Performance[]>([]);
 
   useEffect(() => {
-    fetch("https://organic-space-engine-69p59qxqrjxwf477w-8000.app.github.dev/performances")
+    fetch("https://theater-log-app.onrender.com/performances")
       .then((res) => res.json())
       .then((data) => setPerformances(data));
   }, []);

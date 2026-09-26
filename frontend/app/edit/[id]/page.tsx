@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 
 const CATEGORIES = ["ミュージカル（劇団四季）", "ミュージカル（その他）", "歌舞伎", "その他"];
 const SHOW_TIMES = ["マチネ", "ソワレ", "昼の部", "夜の部", "1部", "2部", "3部"];
-const API_BASE = "https://organic-space-engine-69p59qxqrjxwf477w-8000.app.github.dev";
+const API_BASE = "https://theater-log-app.onrender.com/performances";
 
 type CastInput = {
   role_name: string;

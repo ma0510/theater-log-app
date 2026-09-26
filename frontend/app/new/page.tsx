@@ -51,7 +51,7 @@ export default function NewPerformance() {
       casts,
     };
 
-    const res = await fetch("https://organic-space-engine-69p59qxqrjxwf477w-8000.app.github.dev/performances", {
+    const res = await fetch("https://theater-log-app.onrender.com/performances", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
