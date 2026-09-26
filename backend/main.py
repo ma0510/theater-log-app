@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -14,11 +15,22 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 開発中はすべて許可(本番では絞る)
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+class CharsetMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        response = await call_next(request)
+        if response.headers.get("content-type", "").startswith("application/json"):
+            response.headers["content-type"] = "application/json; charset=utf-8"
+        return response
+
+
+app.add_middleware(CharsetMiddleware)
 
 
 def get_db():
@@ -47,6 +59,7 @@ def read_performances(db: Session = Depends(get_db)):
 @app.get("/performances/{performance_id}", response_model=schemas.PerformanceResponse)
 def read_performance(performance_id: int, db: Session = Depends(get_db)):
     return crud.get_performance(db, performance_id)
+
 
 @app.put("/performances/{performance_id}", response_model=schemas.PerformanceResponse)
 def update_performance(performance_id: int, performance: schemas.PerformanceUpdate, db: Session = Depends(get_db)):
